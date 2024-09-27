@@ -19,29 +19,32 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] GameObject[] CherryItems;
 
 
-
     private void Start()
     {
         AppleCount = AppleItems.Length;
         bananaCount = BananItems.Length;
         CherryCount = CherryItems.Length;
     }
+
+    //------------------------------------
     int i_Apple;
     public void SpawnApple()
     {
         Spawn(AppleItems, ref i_Apple, ref AppleCount);
     }
+    //------------------------------------
     int i_Cherry;
     public void SpawnCherry()
     {
         Spawn(CherryItems, ref i_Cherry, ref CherryCount);
     }
-    [SerializeField] int i_Banana;
+    //------------------------------------
+    int i_Banana;
     public void SpawnBanana()
     {
         Spawn(BananItems, ref i_Banana, ref bananaCount);
     }
-
+    //------------------------------------
 
     void Spawn(GameObject[] item, ref int i_Increasement, ref int ItemCount)
     {
