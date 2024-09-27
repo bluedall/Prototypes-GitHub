@@ -1,9 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// This class is responsible for Rotate Camera using mouse.
+/// </summary>
 public class Player_RotateCamera : MonoBehaviour
 {
+    [SerializeField] float sensitivity = 100.0f;
+    [SerializeField] Transform playerBody;
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -14,20 +19,22 @@ public class Player_RotateCamera : MonoBehaviour
         RotateWithMouse();
     }
 
+
+    [SerializeField] float Min_Y;
+    [SerializeField] float Max_Y;
+
+    float xRotation = 0.0f;
     void RotateWithMouse()
     {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
 
-        transform.Rotate(Vector3.up * mouseX);
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        //Inverse Y mouse movement
-        mouseY = mouseY * -1;
-        float angle = Mathf.Clamp(mouseY, -90, 90);
-        //if (transform.eulerAngles.x < 40 && transform.eulerAngles.x > -15)
-            transform.Rotate(angle, 0f, 0f);
-
-        transform.eulerAngles = new Vector3(Mathf.Clamp(transform.eulerAngles.x, -15, 40), transform.eulerAngles.y, transform.eulerAngles.z);
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        playerBody.Rotate(Vector3.up * mouseX);
+       
     }
 
 }
